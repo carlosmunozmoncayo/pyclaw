@@ -3,7 +3,7 @@ import numpy as np
 from clawpack.pyclaw.util import check_diff
 import os
 
-# Load dictionary with reference solutions
+# Load dictionary with expected solutions
 expected_sols_dict = np.load('expected_sols.npy',allow_pickle=True).item()
 
 def error(test_name,**kwargs):
@@ -45,6 +45,6 @@ class TestAdvectionVarCoeff1D:
         for rk_name in rk_names:
             rk_coeffs = rk_methods_dict[rk_name]
             assert abs(error(test_name='sharpclaw_custom_time_integrator_'+rk_name,kernel_language='Fortran',solver_type='sharpclaw',
-                             time_integrator='RK',rk_coeffs=rk_coeffs)-1.500727e-05)<1e-4, f"Failed for {rk_name}"
+                             time_integrator='RK',rk_coeffs=rk_coeffs))<1e-4, f"Failed for {rk_name}"
 
 
