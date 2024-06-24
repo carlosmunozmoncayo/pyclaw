@@ -25,4 +25,4 @@ def error(test_name,**kwargs):
 class TestAdvection2D:
 
     def test_classic(self):
-        assert abs(error(test_name='classic', solver_type='classic')<1e-6)
+        assert error(test_name='classic', solver_type='classic')<1e-6

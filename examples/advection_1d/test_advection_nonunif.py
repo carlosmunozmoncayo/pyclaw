@@ -26,7 +26,7 @@ def error(test_name,**kwargs):
 
 class TestAdvection1D:
     def test_python_classic(self):
-        assert abs(error(test_name="python_classic",kernel_language='Python',solver_type='classic'))<1e-6
+        assert error(test_name="python_classic",kernel_language='Python',solver_type='classic')<1e-6
 
     def test_fortran_classic(self):
-        assert abs(error(test_name="fortran_classic",kernel_language='Fortran',solver_type='classic'))<1e-6
+        assert error(test_name="fortran_classic",kernel_language='Fortran',solver_type='classic')<1e-6

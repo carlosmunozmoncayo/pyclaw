@@ -18,20 +18,20 @@ def error(test_name,**kwargs):
 
 class TestAdvection2D:
     def test_classic_dimensional_split(self):
-        assert abs(error(test_name='classic_dim_split', solver_type='classic',
-                         dimensional_split=True))<1e-5
+        assert error(test_name='classic_dim_split', solver_type='classic',
+                         dimensional_split=True)<1e-6
 
     def test_classic_unsplit_no_trans(self):
-        assert abs(error(test_name='classic_unsplit_no_trans', solver_type='classic',
-                         dimensional_split=False,transverse_waves=0))<1e-5
+        assert error(test_name='classic_unsplit_no_trans', solver_type='classic',
+                         dimensional_split=False,transverse_waves=0)<1e-6
 
     def test_classic_unsplit_trans_inc(self):
-        assert abs(error(test_name='classic_unsplit_trans_inc',solver_type='classic',
-                         dimensional_split=False,transverse_waves=1))<1e-5
+        assert error(test_name='classic_unsplit_trans_inc',solver_type='classic',
+                         dimensional_split=False,transverse_waves=1)<1e-6
         
     def test_classic_unsplit_trans_cor(self):
-        assert abs(error(test_name='classic_unsplit_trans_cor', solver_type='classic',
-                         dimensional_split=False,transverse_waves=2))<1e-5
+        assert error(test_name='classic_unsplit_trans_cor', solver_type='classic',
+                         dimensional_split=False,transverse_waves=2)<1e-6
     
     def test_sharpclaw(self):
-        assert abs(error(test_name='sharpclaw', solver_type='sharpclaw'))<1e-5
+        assert error(test_name='sharpclaw', solver_type='sharpclaw')<1e-6

@@ -27,16 +27,16 @@ def error(test_name,**kwargs):
 
 class TestAdvectionVarCoeff1D:
     def test_python_classic(self):
-        assert abs(error(test_name="python_classic",kernel_language='Python',solver_type='classic'))<1e-4
+        assert error(test_name="python_classic",kernel_language='Python',solver_type='classic')<1e-6
 
     def test_fortran_classic(self):
-        assert abs(error(test_name="fortran_classic",kernel_language='Fortran',solver_type='classic'))<1e-4
+        assert error(test_name="fortran_classic",kernel_language='Fortran',solver_type='classic')<1e-6
 
     def test_python_sharpclaw(self):
-        assert abs(error(test_name="python_sharpclaw",kernel_language='Python',solver_type='sharpclaw'))<1e-4
+        assert error(test_name="python_sharpclaw",kernel_language='Python',solver_type='sharpclaw')<1e-6
 
     def test_fortran_sharpclaw(self):
-        assert abs(error(test_name="fortran_sharpclaw",kernel_language='Fortran',solver_type='sharpclaw'))<1e-4
+        assert error(test_name="fortran_sharpclaw",kernel_language='Fortran',solver_type='sharpclaw')<1e-6
 
     def test_sharpclaw_custom_time_integrator(self):
         #Load Butcher Tableaux for custom time integrators
@@ -44,7 +44,7 @@ class TestAdvectionVarCoeff1D:
         rk_names = list(rk_methods_dict.keys())
         for rk_name in rk_names:
             rk_coeffs = rk_methods_dict[rk_name]
-            assert abs(error(test_name='sharpclaw_custom_time_integrator_'+rk_name,kernel_language='Fortran',solver_type='sharpclaw',
-                             time_integrator='RK',rk_coeffs=rk_coeffs))<1e-4, f"Failed for {rk_name}"
+            assert error(test_name='sharpclaw_custom_time_integrator_'+rk_name,kernel_language='Fortran',solver_type='sharpclaw',
+                             time_integrator='RK',rk_coeffs=rk_coeffs)<1e-6, f"Failed for {rk_name}"
 
 
