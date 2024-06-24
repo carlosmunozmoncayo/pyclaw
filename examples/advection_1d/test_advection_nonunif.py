@@ -3,30 +3,30 @@ import numpy as np
 from clawpack.pyclaw.util import check_diff
 import os
 
-def error(**kwargs):
+# Load dictionary with expected solutions
+expected_sols_dict = np.load('expected_sols.npy',allow_pickle=True).item()
+
+def error(test_name,**kwargs):
     """
-    Compute difference between initial and final solutions.
-    This should vanish due to the periodic boundary conditions.
-    The L1 norm for the error accounts for the nonuniform grid.
+    Compute L1 norm of difference between test and expected
+    solutions in the physical domain.
     """
+    assert test_name in expected_sols_dict.keys(), f"Test name {test_name} not found in expected_sols.npy"
+
     claw = advection_1d_nonunif.setup(outdir=None,**kwargs)
     claw.run()
+    qtest = claw.frames[claw.num_output_times].state.get_q_global().reshape([-1])
 
-    # tests are done across the entire domain of q normally
-    q0 = claw.frames[0].state.get_q_global()
-    qfinal = claw.frames[claw.num_output_times].state.get_q_global()
-    q0 = q0.reshape([-1])
-    qfinal = qfinal.reshape([-1])
-
+    qexpected = expected_sols_dict[test_name]
     physical_nodes = claw.frames[0].state.grid.p_nodes
     dx=claw.solution.domain.grid.delta[0]
     comp_nodes = claw.frames[0].state.grid.c_nodes
     jac_mapc2p = np.diff(physical_nodes)/np.diff(comp_nodes)
-    return np.sum(abs(dx*jac_mapc2p*(qfinal-q0)))
+    return np.sum(abs(dx*jac_mapc2p*(qtest-qexpected)))
 
 class TestAdvection1D:
     def test_python_classic(self):
-        assert abs(error(kernel_language='Python',solver_type='classic')-0.04305825207098881)<1e-6
+        assert abs(error(test_name="python_classic",kernel_language='Python',solver_type='classic'))<1e-6
 
     def test_fortran_classic(self):
-        assert abs(error(kernel_language='Fortran',solver_type='classic')-0.04305825207098882)<1e-6
+        assert abs(error(test_name="fortran_classic",kernel_language='Fortran',solver_type='classic'))<1e-6
