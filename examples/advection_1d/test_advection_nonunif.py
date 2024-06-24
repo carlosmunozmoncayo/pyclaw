@@ -24,7 +24,7 @@ def error(test_name,**kwargs):
     jac_mapc2p = np.diff(physical_nodes)/np.diff(comp_nodes)
     return np.sum(abs(dx*jac_mapc2p*(qtest-qexpected)))
 
-class TestAdvection1D:
+class TestAdvectionNonUnif1D:
     def test_python_classic(self):
         assert error(test_name="python_classic",kernel_language='Python',solver_type='classic')<1e-6
 

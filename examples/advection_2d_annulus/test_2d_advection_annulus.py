@@ -22,7 +22,7 @@ def error(test_name,**kwargs):
     diff_L1 = np.sum(abs(area*(qtest-qexpected)))
     return diff_L1
 
-class TestAdvection2D:
+class TestAdvectionAnnulus2D:
 
     def test_classic(self):
         assert error(test_name='classic', solver_type='classic')<1e-6
