@@ -1,10 +1,10 @@
 from . import burgers_1d
 import numpy as np
-from clawpack.pyclaw.util import check_diff
 import os
 
-# Load dictionary with expected solutions
-expected_sols_dict = np.load('expected_sols.npy',allow_pickle=True).item()
+thisdir = os.path.dirname(__file__)
+path_expected_sols = os.path.join(thisdir,'expected_sols.npy')
+expected_sols_dict = np.load(path_expected_sols,allow_pickle=True).item()
 
 def error(test_name,**kwargs):
     """
@@ -19,6 +19,8 @@ def error(test_name,**kwargs):
     qtest = claw.frames[claw.num_output_times].state.get_q_global()
     qtest = qtest.reshape([-1])
     dx = claw.solution.domain.grid.delta[0]
+
+    assert test_name in expected_sols_dict.keys(), f"Test name {test_name} not found in {path_expected_sols}"
     qexpected = expected_sols_dict[test_name]
     
     diff = dx*np.sum(np.abs(qtest-qexpected))

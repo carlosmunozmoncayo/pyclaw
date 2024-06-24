@@ -2,16 +2,17 @@ from . import advection_2d
 import numpy as np
 import os
 
-# Load dictionary with expected solutions
-expected_sols_dict = np.load('expected_sols.npy',allow_pickle=True).item()
+thisdir = os.path.dirname(__file__)
+path_expected_sols = os.path.join(thisdir,'expected_sols.npy')
+expected_sols_dict = np.load(path_expected_sols,allow_pickle=True).item()
 
 def error(test_name,**kwargs):
-    assert test_name in expected_sols_dict.keys(), f"Test name {test_name} not found in expected_sols.npy"
     claw = advection_2d.setup(outdir=None,**kwargs)
     claw.run()
     qtest = claw.frames[claw.num_output_times].state.get_q_global().reshape([-1])
     dx = claw.solution.domain.grid.delta[0]
     dy = claw.solution.domain.grid.delta[1]
+    assert test_name in expected_sols_dict.keys(), f"Test name {test_name} not found in {path_expected_sols}"
     qexpected = expected_sols_dict[test_name]
     diff_L1 = dx*dy*np.sum(np.abs(qtest-qexpected))
     return diff_L1
