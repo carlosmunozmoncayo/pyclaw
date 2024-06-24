@@ -8,8 +8,7 @@ expected_sols_dict = np.load('expected_sols.npy',allow_pickle=True).item()
 
 def error(test_name,**kwargs):
     """
-    Compute difference between initial and final solutions.
-    This should vanish due to the periodic boundary conditions
+    Compute difference between test and expected solutions.
     """
 
     claw = variable_coefficient_advection.setup(outdir=None,**kwargs)
