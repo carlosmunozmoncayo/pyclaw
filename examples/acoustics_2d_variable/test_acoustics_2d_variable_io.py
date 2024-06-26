@@ -53,7 +53,7 @@ def test_acoustics_2d_variable_io():
         else:
             return
 
-    tempdir = './_io_test_results'
+    tempdir = os.path.join(thisdir,'_io_test_results')
     claw = acoustics_2d_interface.setup(outdir=tempdir,num_cells=(50,50))
     claw.run()
     verify_acoustics_io(claw)
