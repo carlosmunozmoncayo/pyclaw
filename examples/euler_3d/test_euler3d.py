@@ -42,7 +42,7 @@ class TestEuler3D:
         density_expected = sol_expected.state.get_q_global()[0].reshape([-1])
 
         #Run test
-        tempdir = './_sedov_test_results'
+        tempdir = os.path.join(thisdir,'_sedov_test_results')
         claw = Sedov.setup(solver_type='classic',
                                  outdir=tempdir, num_cells=(16, 16, 16),
                                  num_output_times=1, tfinal=0.1)
