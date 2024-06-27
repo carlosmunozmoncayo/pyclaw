@@ -21,7 +21,7 @@ def error(test_name,**kwargs):
     diff_L1 = dx*np.sum(np.abs(test_depth-expected_depth))
     return diff_L1
 
-class TestEuler2D:
+class TestShallowWater1D:
     def test_dambreak(self):
         solver_types = ['classic','sharpclaw']
         riemann_solvers = ['hlle','roe']
