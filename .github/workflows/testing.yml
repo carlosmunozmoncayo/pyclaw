@@ -1,0 +1,65 @@
+name: Test PyClaw
+
+on:
+  push:
+    branches: [ "master", "add_CI_action" ]
+  pull_request:
+    branches: [ "master", "add_CI_action" ]
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  CLAW: ${{ github.workspace }}
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        # sudo apt-get update
+        # sudo apt-get install gfortran
+        brew update
+        #Force gfortran reinstallation
+        brew reinstall gfortran      
+
+        python -m pip install --upgrade pip
+        pip install flake8 meson-python ninja pytest numpy
+        # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Checkout Clawpack
+      uses: actions/checkout@v4.1.5
+      with:
+        repository: clawpack/clawpack
+        submodules: true
+    - name: Checkout PyClaw branch
+      uses: actions/checkout@v4
+      with:
+        repository: carlosmunozmoncayo/pyclaw
+        path: clawpack/pyclaw
+        ref: add_CI_action
+
+
+    - name: Install clawpack
+      run: |
+        cd ${CLAW}
+        pip install --no-build-isolation --editable .
+
+    - name: Lint with flake8
+      run: |
+        cd ${CLAW}/pyclaw
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude dev
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Test with pytest
+      run: |
+        cd ${CLAW}/pyclaw
+        pytest --ignore=development
