@@ -39,6 +39,10 @@ jobs:
       with:
         repository: clawpack/clawpack
         submodules: true
+
+    - name: Remove existing PyClaw directory
+      run: rm -rf clawpack/pyclaw
+
     - name: Checkout PyClaw branch
       uses: actions/checkout@v4.1.5
       with:
