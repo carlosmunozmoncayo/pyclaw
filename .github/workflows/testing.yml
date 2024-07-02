@@ -29,6 +29,7 @@ jobs:
 
         python -m pip install --upgrade pip
         pip install 'numpy<2.0'
+        pip install matplotlib
         pip install flake8 meson-python ninja pytest
         # if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
