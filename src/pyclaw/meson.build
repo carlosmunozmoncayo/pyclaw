@@ -150,6 +150,7 @@ examples = {
     'test_euler3d.py',
   ],
   'euler_gravity_3d' : [
+    '__init__.py',
     'plotCreateVisitXDMF.py',
     'rising_hot_sphere.py',
     'rising_hot_sphere_spherical.py',
@@ -329,5 +330,47 @@ py.extension_module(
   include_directories: inc_np,
   dependencies : py_dep,
   subdir: 'clawpack/pyclaw/examples/advection_reaction_2d',
+  install : true
+)
+
+## 3D Euler with gravity
+
+ext_name = 'euler_3d_gmap'
+ext_srcs = [
+  '../../examples/euler_gravity_3d/rpn3_euler_mapgrid.f90 ',
+  '../../examples/euler_gravity_3d/rpt3_euler_mapgrid.f90',
+  '../../examples/euler_gravity_3d/rptt3_euler_mapgrid.f90',
+]
+f2py_srcs = custom_target(
+  command: [f2py, ext_name],
+  input: ext_srcs,
+  output: [ext_name + 'module.c', ext_name + '-f2pywrappers.f'],
+)
+
+py.extension_module(
+  ext_name, [ext_srcs, f2py_srcs],
+  incdir_f2py / 'fortranobject.c',
+  include_directories: inc_np,
+  dependencies : py_dep,
+  subdir: 'clawpack/pyclaw/examples/euler_gravity_3d',
+  install : true
+)
+
+ext_name = 'mappedGrid'
+ext_srcs = [
+  '../../examples/euler_gravity_3d/euler3d_mappedGrid.f90',
+]
+f2py_srcs = custom_target(
+  command: [f2py, ext_name],
+  input: ext_srcs,
+  output: [ext_name + 'module.c', ext_name + '-f2pywrappers.f'],
+)
+
+py.extension_module(
+  ext_name, [ext_srcs, f2py_srcs],
+  incdir_f2py / 'fortranobject.c',
+  include_directories: inc_np,
+  dependencies : py_dep,
+  subdir: 'clawpack/pyclaw/examples/euler_gravity_3d',
   install : true
 )
