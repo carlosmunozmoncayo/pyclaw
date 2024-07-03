@@ -363,7 +363,7 @@ ext_srcs = [
 f2py_srcs = custom_target(
   command: [f2py, ext_name],
   input: ext_srcs,
-  output: [ext_name + 'module.c', ext_name + '-f2pywrappers.f'],
+  output: ['mappedGridmodule.c', 'mappedGrid-f2pywrappers.f'],
 )
 
 py.extension_module(
