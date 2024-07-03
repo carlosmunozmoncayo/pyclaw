@@ -337,7 +337,7 @@ py.extension_module(
 
 ext_name = 'euler_3d_gmap'
 ext_srcs = [
-  '../../examples/euler_gravity_3d/rpn3_euler_mapgrid.f90 ',
+  '../../examples/euler_gravity_3d/rpn3_euler_mapgrid.f90',
   '../../examples/euler_gravity_3d/rpt3_euler_mapgrid.f90',
   '../../examples/euler_gravity_3d/rptt3_euler_mapgrid.f90',
 ]
