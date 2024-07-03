@@ -342,9 +342,11 @@ ext_srcs = [
   '../../examples/euler_gravity_3d/rptt3_euler_mapgrid.f90',
 ]
 f2py_srcs = custom_target(
+  'f2py_3d_gmap',
   command: [f2py, ext_name],
   input: ext_srcs,
   output: [ext_name + 'module.c', ext_name + '-f2pywrappers.f'],
+  build_by_default: true,
 )
 
 py.extension_module(
@@ -356,21 +358,23 @@ py.extension_module(
   install : true
 )
 
-# ext_name = 'mappedGrid'
-# ext_srcs = [
-#   '../../examples/euler_gravity_3d/euler3d_mappedGrid.f90',
-# ]
-# f2py_srcs = custom_target(
-#   command: [f2py, ext_name],
-#   input: ext_srcs,
-#   output: ['mappedGridmodule.c', 'mappedGrid-f2pywrappers.f'],
-# )
+ext_name = 'mappedGrid'
+ext_srcs = [
+  '../../examples/euler_gravity_3d/euler3d_mappedGrid.f90',
+]
+f2py_srcs = custom_target(
+  'f2py_mappedGrid',
+  command: [f2py, ext_name],
+  input: ext_srcs,
+  output: ['mappedGridmodule.c', 'mappedGrid-f2pywrappers.f'],
+  build_by_default: true,
+)
 
-# py.extension_module(
-#   ext_name, [ext_srcs, f2py_srcs],
-#   incdir_f2py / 'fortranobject.c',
-#   include_directories: inc_np,
-#   dependencies : py_dep,
-#   subdir: 'clawpack/pyclaw/examples/euler_gravity_3d',
-#   install : true
-# )
+py.extension_module(
+  ext_name, [ext_srcs, f2py_srcs],
+  incdir_f2py / 'fortranobject.c',
+  include_directories: inc_np,
+  dependencies : py_dep,
+  subdir: 'clawpack/pyclaw/examples/euler_gravity_3d',
+  install : true
+)
