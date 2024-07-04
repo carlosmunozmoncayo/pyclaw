@@ -366,7 +366,7 @@ f2py_srcs = custom_target(
   'f2py_mappedGrid',
   command: [f2py, ext_name],
   input: ext_srcs,
-  output: ['mappedGridmodule.c', 'mappedGrid-f2pywrappers.f'],
+  output: [ext_name + 'module.c', ext_name + '-f2pywrappers2.f90'],
   build_by_default: true,
 )
 
