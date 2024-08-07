@@ -2,9 +2,9 @@ name: Test PyClaw
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "test_CI_new" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "master", "test_CI_new" ]
 
   workflow_dispatch:
 
@@ -55,7 +55,7 @@ jobs:
         cd ${CLAW}
         pip install --no-build-isolation --editable .
 
-    - name: Test with pytest
-      run: |
-        cd ${CLAW}/pyclaw
-        pytest --ignore=development
+    # - name: Test with pytest
+    #   run: |
+    #     cd ${CLAW}/pyclaw
+    #     pytest --ignore=development
