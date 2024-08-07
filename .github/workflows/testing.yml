@@ -46,11 +46,6 @@ jobs:
         path: pyclaw
         ref: master
     
-    - name: Checkout Riemann branch
-      uses: actions/checkout@v4.1.5
-      with:
-        path: riemann
-        ref: master
 
     - name: Install clawpack
       run: |
